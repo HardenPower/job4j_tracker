@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import ru.job4j.tracker.action.*;
 import ru.job4j.tracker.input.Input;
 import ru.job4j.tracker.input.MockInput;
+import ru.job4j.tracker.input.ValidateInput;
 import ru.job4j.tracker.output.Output;
 import ru.job4j.tracker.output.StubOutput;
 
@@ -205,5 +206,53 @@ class StartUITest {
                         + "0. Завершить программу" + ln
                         + "=== Завершение программы ===" + ln
         );
+    }
+
+    @Test
+    void whenInvalidInput() {
+        Output output = new StubOutput();
+        Input in = new MockInput(
+                new String[] {"one", "1"}
+        );
+        ValidateInput input = new ValidateInput(output, in);
+        int selected = input.askInt("Enter menu:");
+        assertThat(selected).isEqualTo(1);
+    }
+
+    @Test
+    void whenValidInput() {
+        Output output = new StubOutput();
+        Input in = new MockInput(
+                new String[] {"6"}
+        );
+        ValidateInput input = new ValidateInput(output, in);
+        int selected = input.askInt("Enter menu:");
+        assertThat(selected).isEqualTo(6);
+    }
+
+    @Test
+    void whenMultipleValidInput() {
+        Output output = new StubOutput();
+        Input in = new MockInput(
+                new String[] {"0", "2", "6"}
+        );
+        ValidateInput input = new ValidateInput(output, in);
+        int selected = input.askInt("Enter menu:");
+        assertThat(selected).isEqualTo(0);
+        selected = input.askInt("Enter menu:");
+        assertThat(selected).isEqualTo(2);
+        selected = input.askInt("Enter menu:");
+        assertThat(selected).isEqualTo(6);
+    }
+
+    @Test
+    void whenNegativeInput() {
+        Output output = new StubOutput();
+        Input in = new MockInput(
+                new String[] {"-100"}
+        );
+        ValidateInput input = new ValidateInput(output, in);
+        int selected = input.askInt("Enter menu:");
+        assertThat(selected).isEqualTo(-100);
     }
 }
