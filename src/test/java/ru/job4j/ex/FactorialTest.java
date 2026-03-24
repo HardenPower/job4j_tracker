@@ -16,4 +16,10 @@ class FactorialTest {
         assertThat(exception.getMessage()).isEqualTo(text);
     }
 
+    @Test
+    public void whenCorrect() {
+        int result = new Factorial().calc(3);
+        assertThat(result).isEqualTo(6);
+    }
+
 }
