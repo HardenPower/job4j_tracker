@@ -57,16 +57,11 @@ public class PasswordValidator {
             );
         }
 
-        boolean isAllow = true;
         String passwordLc = password.toLowerCase();
         for (String word: FORBIDDEN) {
             if (passwordLc.contains(word.toLowerCase())) {
-                isAllow = false;
-                break;
+                throw new IllegalArgumentException("Password shouldn't contain substrings: " + String.join(", ", FORBIDDEN));
             }
-        }
-        if (!isAllow) {
-            throw new IllegalArgumentException("Password shouldn't contain substrings: " + String.join(", ", FORBIDDEN));
         }
         return password;
     }
