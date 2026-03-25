@@ -3,7 +3,7 @@ package ru.job4j.ex;
 public class UserStore {
     public static User findUser(User[] users, String login) throws UserNotFoundException {
         if (users == null || users.length == 0) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Users storage is empty");
         }
         for (User user : users) {
             if (user.getUsername().equals(login)) {
