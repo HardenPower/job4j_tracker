@@ -16,12 +16,11 @@ public class PhoneDictionary {
      */
     public ArrayList<Person> find(String key) {
         ArrayList<Person> result = new ArrayList<>();
-        String upperKey = key.toUpperCase();
         for (Person person : persons) {
-            if (person.getName().toUpperCase().contains(upperKey)
-                    || person.getSurname().toUpperCase().contains(upperKey)
+            if (person.getName().contains(key)
+                    || person.getSurname().contains(key)
                     || person.getPhone().contains(key)
-                    || person.getAddress().toUpperCase().contains(upperKey)) {
+                    || person.getAddress().contains(key)) {
                 result.add(person);
             }
         }
