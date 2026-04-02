@@ -6,7 +6,7 @@ import java.util.List;
 public class NotifyAccount {
     public static HashSet<Account> sent(List<Account> accounts) {
         HashSet<Account> result = new HashSet<>();
-        for (Account elem: accounts) {
+        for (Account elem : accounts) {
             result.add(elem);
         }
         return result;
