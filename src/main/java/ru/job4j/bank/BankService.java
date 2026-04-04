@@ -13,11 +13,7 @@ public class BankService {
     }
 
     public void deleteUser(String passport) {
-        for (User key : users.keySet()) {
-            if (key.getPassport().equals(passport)) {
-                users.remove(key);
-            }
-        }
+        users.remove(new User(passport, ""));
     }
 
     public void addAccount(String passport, Account account) {
@@ -26,7 +22,7 @@ public class BankService {
             List<Account> accountsUser = getAccounts(user);
             if (!accountsUser.contains(account)) {
                 accountsUser.add(account);
-                users.putIfAbsent(user, accountsUser);
+//                users.putIfAbsent(user, accountsUser);
             }
         }
     }
@@ -61,17 +57,12 @@ public class BankService {
                                  String destinationPassport, String destinationRequisite,
                                  double amount) {
         boolean result = false;
-        User userSrc = findByPassport(sourcePassport);
-        List<Account> accSrcAll = getAccounts(userSrc);
         Account accSrc = findByRequisite(sourcePassport, sourceRequisite);
-
-        if (userSrc != null && accSrc != null && accSrcAll.contains(accSrc) && accSrc.getBalance() >= amount) {
-            Account accDes = findByRequisite(destinationPassport, destinationRequisite);
-            if (accDes != null) {
-                accDes.setBalance(accDes.getBalance() + amount);
-                accSrc.setBalance(accSrc.getBalance() - amount);
-                result = true;
-            }
+        Account accDes = findByRequisite(destinationPassport, destinationRequisite);
+        if (accSrc != null && accDes != null && accSrc.getBalance() >= amount) {
+            accDes.setBalance(accDes.getBalance() + amount);
+            accSrc.setBalance(accSrc.getBalance() - amount);
+            result = true;
         }
         return result;
     }
