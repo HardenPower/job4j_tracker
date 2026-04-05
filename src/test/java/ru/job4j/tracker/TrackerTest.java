@@ -2,6 +2,8 @@ package ru.job4j.tracker;
 
 import org.junit.jupiter.api.Test;
 
+import ru.job4j.tracker.comparator.*;
+import java.util.LinkedList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -94,5 +96,45 @@ public class TrackerTest {
         tracker.add(item);
         tracker.delete(1000);
         assertThat(tracker.findById(item.getId()).getName()).isEqualTo("Bug");
+    }
+
+    @Test
+    void whenItemAscByName() {
+        List<Item> items = new LinkedList<>(List.of(
+                new Item("Calin"),
+                new Item("Alex"),
+                new Item("Balin"),
+                new Item("Tvalin"),
+                new Item("Galin")
+        ));
+        items.sort(new ItemAscByName());
+        List<Item> expected = new LinkedList<>(List.of(
+                new Item("Alex"),
+                new Item("Balin"),
+                new Item("Calin"),
+                new Item("Galin"),
+                new Item("Tvalin")
+        ));
+        assertThat(items).containsExactlyElementsOf(expected);
+    }
+
+    @Test
+    void whenItemDescByName() {
+        List<Item> items = new LinkedList<>(List.of(
+                new Item("Calin"),
+                new Item("Alex"),
+                new Item("Tvalin"),
+                new Item("Galin"),
+                new Item("Balin")
+        ));
+        items.sort(new ItemDescByName());
+        List<Item> expected = new LinkedList<>(List.of(
+                new Item("Tvalin"),
+                new Item("Galin"),
+                new Item("Calin"),
+                new Item("Balin"),
+                new Item("Alex")
+        ));
+        assertThat(items).containsExactlyElementsOf(expected);
     }
 }
