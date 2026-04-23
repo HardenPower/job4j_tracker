@@ -10,7 +10,6 @@ public class School {
         return students.stream()
                 .flatMap(Stream::ofNullable)
                 .filter(predicate)
-                .map(student -> new Student(student.getScore(), student.getSurname()))
                 .collect(Collectors.toList());
     }
 }
