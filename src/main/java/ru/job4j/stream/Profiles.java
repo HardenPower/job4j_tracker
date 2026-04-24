@@ -13,6 +13,14 @@ public class Profiles {
     }
 
     public static List<Address> collectSortWithoutDuplicate(List<Profile> profiles) {
+        System.out.println(
+                List.of(1, 1, 2, 2).stream().collect(
+                        Collectors.toMap(
+                                element -> element,
+                                element -> element * element,
+                                (a, b) -> a
+                        ))
+        );
         return profiles.stream()
                 .map(Profile::getAddress)
                 .sorted(Comparator.comparing(Address::getCity))
